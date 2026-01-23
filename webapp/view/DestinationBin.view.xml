@@ -1,0 +1,163 @@
+<mvc:View controllerName="com.triumph.putawaybymarriage.controller.DestinationBin"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+    <Page id="idPageDestinationBin">
+        <headerContent>
+            <Image src="{imageModel>/path}/images/triumph.png" height="100%" width="auto" class="sapUiTinyMarginBegin" />
+            <ToolbarSpacer />
+            <Title text="{i18n>title}" />
+            <ToolbarSpacer />
+            <!-- <Button icon="sap-icon://sys-help" press="onPressButtonHelp" /> -->
+            <Button id="buttonWelcomeLogoutMain" icon="sap-icon://log" press=".onPressButtonLogout" />
+        </headerContent>
+        <content>
+            <!-- <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <VBox class="sapUiTinyMargin">
+
+                    //Action Buttons
+                    <HBox class="sapUiSmallMarginBottom">
+                        <Button text="F2 Clr" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                        <Button text="F3 Back" class="sapUiTinyMarginEnd" press=".onBack"/>
+                        <Button text="F4 Nxt" press=".onNext"/>
+                    </HBox>
+
+                    //Destination Info
+                    <VBox class="sapUiSmallMarginBottom customVBoxBorder">
+                        <Title class="sapUiTinyMargin" text="Destination info." level="H4"/>
+
+                        <l:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+                            <VBox>
+                                <Label text="Dest. Str. Bin"/>
+                                <HBox >
+                                    <Input editable="false" width="4rem"/>
+                                    <Input />
+                                </HBox>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Plant"/>
+                                <Input value="INA1" editable="false"/>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Count"/>
+                                <HBox>
+                                    <Input editable="false" value="01" width="4rem"/>
+                                    <Text text="/" class="sapUiTinyMargin"/>
+                                    <Input editable="false" value="01" width="4rem"/>
+                                </HBox>
+                            </VBox>
+                        </l:Grid>
+                    </VBox>
+
+                    //Material Information
+                    <VBox class="customVBoxBorder">
+                        <Title class="sapUiTinyMargin" text="Material information" level="H4"/>
+
+                        <l:Grid defaultSpan="L4 M6 S12" class="sapUiSmallMarginTop">
+
+                            <VBox>
+                                <Label text="Material"/>
+                                <Input value="30062377" editable="false"/>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Batch"/>
+                                <Input value="0042332069" editable="false"/>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Mat. Description"/>
+                                <Input value="POWERNET" editable="false"/>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Grid"/>
+                                <Input value="00041920" editable="false"/>
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Ven. Dye Lot"/>
+                                <Input editable="false" />
+                            </VBox>
+
+                            <VBox>
+                                <Label text="Quantity"/>
+                                <HBox>
+                                    <Input value="79.000" width="8rem"/>
+                                    <Input value="M" width="2rem" editable="false" class="sapUiTinyMarginBegin"/>
+                                </HBox>
+                            </VBox>
+
+                        </l:Grid>
+                    </VBox>
+
+                </VBox>
+            </l:Grid> -->
+
+            <HBox class="sapUiTinyMargin sapUiSmallMarginBegin">
+                <Button text="Clear" icon="sap-icon://reset" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                <Button text="Back" icon="sap-icon://media-reverse" class="sapUiTinyMarginEnd" press=".onBack"/>
+                <Button text="Next" icon="sap-icon://media-play" press=".onNext"/>
+            </HBox>
+            <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <!-- Destination Information -->
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" emptySpanXL="6" emptySpanL="6" emptySpanM="2" emptySpanS="0" class="sapUiTinyMarginBottom customVBoxBorder">
+
+                    <Title text="Destination info." level="H4"/>
+
+                    <Label text="Dest. Str. Bin"/>
+                    <HBox>
+                        <Input editable="false" width="4rem"/>
+                        <Input class="sapUiTinyMarginBegin"/>
+                    </HBox>
+
+                    <Label text="Plant"/>
+                    <Input value="INA1" editable="false"/>
+
+                    <Label text="Count"/>
+                    <HBox>
+                        <Input editable="false" value="01" width="4rem"/>
+                        <Text text="/" class="sapUiTinyMargin sapUiTinyPaddingBottom"/>
+                        <Input editable="false" value="01" width="4rem"/>
+                    </HBox>
+
+                </form:SimpleForm>
+            </l:Grid >
+
+            <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <!-- Material Information -->
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" emptySpanXL="6" emptySpanL="6" emptySpanM="2" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="1" class="customVBoxBorder">
+
+                    <Title text="Material information" level="H4"/>
+
+                    <Label text="Material"/>
+                    <Input value="30062377" editable="false"/>
+
+                    <Label text="Batch"/>
+                    <Input value="0042332069" editable="false"/>
+
+                    <Label text="Mat. Description"/>
+                    <Input value="POWERNET" editable="false"/>
+
+                    <Label text="Grid"/>
+                    <Input value="00041920" editable="false"/>
+
+                    <Label text="Ven. Dye Lot"/>
+                    <Input editable="false"/>
+
+                    <Label text="Quantity"/>
+                    <HBox>
+                        <Input value="79.000" width="8rem"/>
+                        <Input value="M" width="2rem" editable="false" class="sapUiTinyMarginBegin"/>
+                    </HBox>
+
+                </form:SimpleForm>
+            </l:Grid>
+
+        </content>
+    </Page>
+</mvc:View>

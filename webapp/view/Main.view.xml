@@ -1,0 +1,83 @@
+<mvc:View controllerName="com.triumph.putawaybymarriage.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <Page id="page">
+        <headerContent>
+            <Image src="{imageModel>/path}/images/triumph.png" height="100%" width="auto" class="sapUiTinyMarginBegin" />
+            <ToolbarSpacer />
+            <Title text="{i18n>title}" />
+            <ToolbarSpacer />
+            <!-- <Button icon="sap-icon://sys-help" press="onPressButtonHelp" /> -->
+            <Button id="buttonWelcomeLogoutMain" icon="sap-icon://log" press=".onPressButtonLogout" />
+        </headerContent>
+        <!-- <headerContent>
+            <Button text="Copy Source Bin" press="onCopySourceBin" enabled="{= !!${appModel>/rows/0/bin} }"/>
+            <Button text="Next" press=".onWizardPage"/>
+        </headerContent> -->
+        <content>
+            <HBox class="sapUiTinyMargin sapUiSmallMarginBegin">
+                <Button text="Clear" icon="sap-icon://reset" tooltip="Clear Scanned Batch/Bin" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                <Button text="Copy Source Bin" icon="sap-icon://copy" tooltip="Copy First Source Bin to All Scanned Batches" press="onCopySourceBin" enabled="{= !!${appModel>/rows/0/bin} }"/>
+            </HBox>
+            <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <!-- <VBox alignItems="Start"> -->
+                <!-- <Panel class="customVBoxBorder"> -->
+                <Table id="scanTable" class="customVBoxBorder" headerText="Material / Source Bin Scan" items="{appModel>/rows}" mode="None" fixedLayout="true">
+
+                    <columns>
+                        <!-- Batch -->
+                        <Column width="12rem" minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Mat. /Batch No"/>
+                        </Column>
+
+                        <!-- Bin -->
+                        <Column width="8rem" minScreenWidth="Tablet" demandPopin="true">
+                            <Text text="Source Storage Bin"/>
+                        </Column>
+
+                        <!-- Storage Type -->
+                        <Column width="4rem" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+                            <Text text="St. Type"/>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+
+                                <!-- Batch -->
+                                <Input value="{appModel>batch}" submit="onScanSubmit" change="onBatchChange" valueState="{appModel>batchState}" valueStateText="{appModel>batchStateText}">
+                                    <customData>
+                                        <core:CustomData key="col" value="BATCH"/>
+                                    </customData>
+                                </Input>
+
+                                <!-- Bin -->
+                                <Input value="{appModel>bin}" submit="onScanSubmit" enabled="{= !!${appModel>batch} }" valueState="{appModel>binState}" valueStateText="{appModel>binStateText}">
+                                    <customData>
+                                        <core:CustomData key="col" value="BIN"/>
+                                    </customData>
+                                </Input>
+
+                                <!-- Storage Type -->
+                                <Input value="{appModel>bin}" enabled="false"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <!-- </Panel> -->
+                <!-- </VBox> -->
+            </l:Grid>
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button id="sameDestinationBincontinueButton" enabled="{appModel>/canContinue}" text="SameDBin" press="onContinue" tooltip="Press SameDBin to Move all Scanned Batch/Material to  Same Destination Bin"/>
+                <Button id="continueButton" enabled="{appModel>/canContinue}" text="Continue" type="Emphasized" press=".onContinue" tooltip="Press Continue to Move all Scanned Batch/Material to Diff. Destination Bin"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

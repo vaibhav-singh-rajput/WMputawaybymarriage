@@ -1,0 +1,151 @@
+{
+  "_version": "1.76.0",
+  "sap.app": {
+    "id": "com.triumph.putawaybymarriage",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.0",
+      "toolsId": "ad915462-73b8-4e85-ad82-e5b7524387a7"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "putawaybymarriage-display": {
+          "semanticObject": "putawaybymarriage",
+          "action": "display",
+          "title": "{{putawaybymarriage-display.flpTitle}}",
+          "subTitle": "{{putawaybymarriage-display.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.143.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.triumph.putawaybymarriage.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "com.triumph.putawaybymarriage.view",
+        "async": true,
+        "viewPath": "com.triumph.putawaybymarriage.view"
+      },
+      "routes": [
+        {
+          "name": "RouteMain",
+          "pattern": ":?query:",
+          "target": [
+            "TargetMain"
+          ]
+        },
+        {
+          "name": "HeaderWizard",
+          "pattern": "headerWizard/{subPr}",
+          "target": [
+            "HeaderWizard"
+          ]
+        },
+        {
+          "name": "DestinationBin",
+          "pattern": "destinationbin",
+          "target": [
+            "DestinationBin"
+          ]
+        },
+        {
+          "name": "DestinationBinConfirm",
+          "pattern": "destinationbinconfirm",
+          "target": [
+            "DestinationBinConfirm"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetMain": {
+          "id": "Main",
+          "name": "Main"
+        },
+        "HeaderWizard": {
+          "viewType": "XML",
+          "id": "HeaderWizard",
+          "name": "HeaderWizard",
+          "clearControlAggregation": true
+        },
+        "DestinationBin": {
+          "id": "DestinationBin",
+          "name": "DestinationBin"
+        },
+        "DestinationBinConfirm": {
+          "id": "DestinationBinConfirm",
+          "name": "DestinationBinConfirm"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.triumph.putawaybymarriage.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "comtriumphputawaybymarriage"
+  }
+}

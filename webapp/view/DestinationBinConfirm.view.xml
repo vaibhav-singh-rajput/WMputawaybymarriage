@@ -1,0 +1,147 @@
+<mvc:View controllerName="com.triumph.putawaybymarriage.controller.DestinationBinConfirm"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+    <Page id="idPageDestinationBinConfirm">
+        <headerContent>
+            <Image src="{imageModel>/path}/images/triumph.png" height="100%" width="auto" class="sapUiTinyMarginBegin" />
+            <ToolbarSpacer />
+            <Title text="{i18n>title}" />
+            <ToolbarSpacer />
+            <!-- <Button icon="sap-icon://sys-help" press="onPressButtonHelp" /> -->
+            <Button id="buttonWelcomeLogoutMain" icon="sap-icon://log" press=".onPressButtonLogout" />
+        </headerContent>
+        <content>
+            <!-- <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <VBox class="sapUiTinyMargin">
+
+                    //Action Buttons
+                    <HBox class="sapUiSmallMarginBottom">
+                        <Button text="F1 Conf Bin" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                        <Button text="F2 Clr" class="sapUiTinyMarginEnd"/>
+                        <Button text="F3 Back" press=".onBack"/>
+                        <Button text="F4 Nxt" press=".onBack"/>
+                    </HBox>
+
+                    //Destination Info
+                    <VBox class="customVBoxBorder">
+                        <Title text="Destination info." level="H4" class="sapUiTinyMargin"/>
+
+                        //Row 1
+                        <l:Grid defaultSpan="L6 M6 S12" class="sapUiSmallMarginTop">
+                            <VBox >
+                                <Label text="Dest. Str. Bin"/>
+                                <Input value="{DestBin}" editable="false"/>
+                            </VBox>
+
+                            <VBox class="sapUiTinyMarginBegin">
+                                <Label text="Count"/>
+                                <HBox>
+                                    <Input value="01" width="4rem" editable="false"/>
+                                    <Text text="/" class="sapUiTinyMargin"/>
+                                    <Input value="01" width="4rem" editable="false"/>
+                                </HBox>
+                            </VBox>
+
+                        </l:Grid>
+
+                        //Row 2
+                        <l:Grid defaultSpan="L6 M6 S12" class="sapUiSmallMarginTop">
+                            <VBox >
+                                <Label text="Confirm Bin"/>
+                                <Input editable="true"/>
+                            </VBox>
+
+                            <VBox class="sapUiTinyMarginBegin">
+                                <Label text="Emp. Bin In."/>
+                                <CheckBox selected="{EmpBinIn1}" enabled="false"/>
+                            </VBox>
+                        </l:Grid>
+
+                        //Row 3
+                        <l:Grid defaultSpan="L6 M6 S12" class="sapUiSmallMarginTop">
+                            <VBox >
+                                <Label text="Change Bin"/>
+                                <Input value="{ChangeBin}" editable="false"/>
+                            </VBox>
+
+                            <VBox class="sapUiTinyMarginBegin">
+                                <Label text="Emp. Bin In."/>
+                                <CheckBox selected="{EmpBinIn2}" enabled="false"/>
+                            </VBox>
+                        </l:Grid>
+
+
+                    </VBox>
+                </VBox>
+            </l:Grid> -->
+
+            <HBox class="sapUiTinyMargin sapUiSmallMarginBegin">
+                <Button text="Clear" icon="sap-icon://reset" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                <!-- <Button text="Back" icon="sap-icon://media-reverse" class="sapUiTinyMarginEnd" press=".onBack"/> -->
+                <Button text="Next" icon="sap-icon://media-play" press=".onBack"/>
+            </HBox>
+
+            <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <!-- Destination Information -->
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" emptySpanXL="6" emptySpanL="6" emptySpanM="2" emptySpanS="0" class="sapUiTinyMarginBottom customVBoxBorder">
+
+                    <Title text="Destination info." level="H4"/>
+
+                    <Label text="Dest. Str. Bin"/>
+                    <Input editable="false"/>
+
+                    <Label text="Count"/>
+                    <HBox>
+                        <Input editable="false" value="01" width="4rem"/>
+                        <Text text="/" class="sapUiTinyMargin"/>
+                        <Input editable="false" value="01" width="4rem"/>
+                    </HBox>
+
+                    <Label text="Confirm Bin" />
+                    <Input ></Input>
+
+                    <Label text="Empty Bin In." />
+                    <CheckBox selected="{EmpBinIn1}" enabled="false"/>
+
+                    <Label text="Change Bin" />
+                    <Input ></Input>
+
+
+
+                    <Label text="Empty Bin In." />
+                    <CheckBox selected="{EmpBinIn2}" enabled="false"/>
+
+                </form:SimpleForm>
+            </l:Grid >
+
+
+
+            <!-- <form:SimpleForm id="SimpleFormDisplayColumn_oneGroup223" editable="true" layout="ColumnLayout" title="Destination info." columnsM="2" columnsL="2" columnsXL="3">
+                <form:content>
+                    <Label text="Dest. Str. Bin" />
+                    <Input value="{DestBin}" editable="false"/>
+
+                    <Label text="Confirm Bin" />
+                    <Input ></Input>
+
+                    <Label text="Change Bin" />
+                    <Input editable="false"></Input>
+
+                    <Label text="Count" />
+                    <Input value="{CountCurrent}" width="4rem" editable="false"/>
+                    <Text text="/"/>
+                    <Input value="{CountTotal}" width="4rem" editable="false"/>
+
+                    <Label text="Emp. Bin In." />
+                    <CheckBox selected="{EmpBinIn1}" enabled="false"/>
+
+                    <Label text="Emp. Bin In." />
+                    <CheckBox selected="{EmpBinIn2}" enabled="false"/>
+                </form:content>
+            </form:SimpleForm> -->
+        </content>
+    </Page>
+</mvc:View>

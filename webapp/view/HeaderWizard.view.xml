@@ -1,0 +1,1062 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    controllerName="com.triumph.putawaybymarriage.controller.HeaderWizard"
+    displayBlock="true">
+    <Page id="wizardPage"  title="{i18n>title}"
+        enableScrolling="true">
+        <content>
+            <Wizard id="wizardHeader"
+                class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+                showNextButton="false"
+                navigationChange="handleHeaderWizardNavigationChange"
+                renderMode="Page">
+                <WizardStep id="wizardHeaderBatchEntrySelection"
+                    title="{i18n>wHBatchEntryStepTitle}"
+                    validated="true">
+                    <form:Form id="formShoppingOnBehalf"
+                        class="sapUiSmallMarginBottom">
+                        <form:title>
+                            <core:Title text="{i18n>wHBatchEntryStepTitleShoppingOnBehalf}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:formContainers>
+                            <form:FormContainer>
+                                <form:formElements>
+                                    <form:FormElement>
+                                        <form:fields>
+                                            <RadioButtonGroup id="radioButtonGroupBatchEntryMode"
+                                                select="onRadioButtonGroupBatchEntryModeSelect">
+                                                <buttons>
+                                                    <RadioButton text="{i18n>wHRecipientStepButtonForMyself}" />
+                                                    <RadioButton text="{i18n>wHRecipientStepButtonOnBehalf}" />
+                                                </buttons>
+                                            </RadioButtonGroup>
+                                        </form:fields>
+                                    </form:FormElement>
+                                </form:formElements>
+                            </form:FormContainer>
+                        </form:formContainers>
+                    </form:Form>
+                    <Panel id="panelRecipientSelection"
+                        visible="false"
+                        backgroundDesign="Transparent">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="{i18n>wHBatchEntryStepTitleRecipientSelection}"
+                                    class="panelTitleNoMarginLeft" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <Text text="{i18n>wHRecipientStepIntroRecipientSelection}"
+                                class="sapUiTinyMarginTop sapUiSmallMarginBottom" />
+                            <fb:FilterBar id="filterBarRecipientList"
+                                reset="onReset"
+                                search="onFilterBarRecipientSearch"
+                                header="{i18n>wHBatchEntryStepTitleRecipientList}"
+                                showFilterConfiguration="false"
+                                useToolbar="false"
+                                class="filterBarTitleNoMargin">
+                                <fb:filterGroupItems>
+                                    <fb:FilterGroupItem groupName="firstName"
+                                        groupTitle="{i18n>wHRecipientStepLabelSearchFirstName}"
+                                        name="filterFirstName"
+                                        label="{i18n>wHRecipientStepLabelSearchFirstName}"
+                                        partOfCurrentVariant="true"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <Input id="inputRecipientSearchFirstName"
+                                                type="Text"
+                                                placeholder="{i18n>wHRecipientStepPlaceholderSearchFirstName}" />
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+
+                                    <fb:FilterGroupItem groupName="lastName"
+                                        groupTitle="{i18n>wHRecipientStepLabelSearchLastName}"
+                                        name="filterLastName"
+                                        label="{i18n>wHRecipientStepLabelSearchLastName}"
+                                        partOfCurrentVariant="true"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <Input id="inputRecipientSearchLastName"
+                                                type="Text"
+                                                placeholder="{i18n>wHRecipientStepPlaceholderSearchLastName}" />
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+                                </fb:filterGroupItems>
+                            </fb:FilterBar>
+                            <List id="listRecipientSelectionWizard"
+                                mode="SingleSelectLeft"
+                                noDataText="{i18n>wHRecipientStepNoDataTextRecipientList}"
+                                growing="true"
+                                growingThreshold="10"
+                                growingTriggerText="{i18n>wHRecipientStepShowMoreTextList}"
+                                selectionChange="onSelectionChangeRecipientList"
+                                items="{recipientModel>/results/}">
+                                <ObjectListItem title="{recipientModel>fullName}">
+                                    <markers>
+                                        <ObjectMarker
+                                            visible="{= ${recipientModel>division} ? false : true}"
+                                            type="Locked"
+                                            additionalInfo="{i18n>wHRecipientStepLabelRecipientLocked}"/>
+                                    </markers>
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyEmail}"
+                                        text="{recipientModel>email}" />
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyCountry}"
+                                        text="{recipientModel>country}" />
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyCompany}"
+                                        text="{recipientModel>company}" />
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyOffice}"
+                                        text="{recipientModel>office}" />
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyDepartment}"
+                                        text="{recipientModel>department}" />
+                                    <ObjectAttribute title="{i18n>wHRecipientStepLabelPropertyDivision}"
+                                        text="{recipientModel>division}" />
+                                </ObjectListItem>
+                            </List>
+                        </content>
+                    </Panel>
+                </WizardStep>
+                <WizardStep id="wizardHeaderEntity"
+                    title="{i18n>wHEntityStepTitle}">
+                    <form:Form id="formHeaderWizardEntity"
+                        editable="true">
+                        <form:title>
+                            <core:Title text="{i18n>wHEntityStepTitleEntity}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelCC}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <ComboBox id="selectCompanyCode"
+                                            required="true"
+                                            placeholder="{i18n>wHEntityStepPlaceholderComboBoxCompanyCode}"
+                                            change="handleChangeSelectCompanyCodeEntity"
+                                            selectedKey="{headerWizardModel>/selectedCompanyCode}"
+                                            items="{
+                                                path: 'companyCodeModel>/',
+                                                sorter: { path: 'Bukrs' }
+                                            }">
+                                            <items>
+                                                <core:Item key="{companyCodeModel>Bukrs}"
+                                                    text="{companyCodeModel>Bukrs} - {companyCodeModel>Butxt}" />
+                                            </items>
+                                        </ComboBox>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement visible="{headerWizardModel>/plantSelectVisible}">
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelPlant}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <ComboBox id="selectPlant"
+                                            required="true"
+                                            placeholder="{i18n>wHEntityStepPlaceholderComboBoxPlant}"
+                                            change="handleChangeSelectPlantEntity"
+                                            selectedKey="{headerWizardModel>/selectedPlant}"
+                                            items="{
+                                                path: 'plantSelectionModel>/',
+                                                sorter: { path: 'Werks' }
+                                            }">
+                                            <items>
+                                                <core:Item key="{plantSelectionModel>Werks}"
+                                                    text="{plantSelectionModel>Werks} - {plantSelectionModel>Name1}" />
+
+                                            </items>
+                                        </ComboBox>
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement visible="{headerWizardModel>/plantTextBoxVisible}">
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelPlant}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Bukrs}{= ${prHeaderModel>/plant/Bukrs} &amp;&amp; ${prHeaderModel>/plant/Name1} ? ' - ' : ''}{prHeaderModel>/plant/Name1}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelCity}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/companyCode/Ort01}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelCountry}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/companyCode/Land1}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelCurrency}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/companyCode/Waers}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHEntityStepLabelVAT}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/companyCode/Stceg}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        <form:FormContainer>
+                        </form:FormContainer>
+                    </form:Form>
+                    <form:Form id="formHeaderWizardDeliveryAddress"
+                        editable="true">
+                        <form:title>
+                            <core:Title text="{i18n>wHEntityStepTitleDeliveryAddress}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer visible="{= !${headerWizardModel>/inputsDeliveryAddressEditable}}">
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHDeliveryAddressStepLabelName}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Name1}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHDeliveryAddressStepLabelStreetHouseNr}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Stras} {prHeaderModel>/plant/Hsnm1}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Pstlz/@sap:label}/ {/#Plant/Ort01/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Pstlz} {prHeaderModel>/plant/Ort01}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Land1/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Land1} {prHeaderModel>/plant/Land1T}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Region/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Text text="{prHeaderModel>/plant/Region} {prHeaderModel>/plant/RegionT}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        <form:FormContainer visible="{headerWizardModel>/inputsDeliveryAddressEditable}">
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHDeliveryAddressStepLabelName}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Input placeholder="{i18n>wHDeliveryAddressStepPlaceholderName}"
+                                            enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            fieldGroupIds="deliveryAddress"
+                                            required="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Name1',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: false,
+                                                    maxLength: 40
+                                                }
+                                            }" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHDeliveryAddressStepLabelStreetHouseNr}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Input placeholder="{i18n>wHDeliveryAddressStepPlaceholderStreet}"
+                                            enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            fieldGroupIds="deliveryAddress"
+                                            required="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Stras',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: false,
+                                                    maxLength: 60
+                                                }
+                                            }" />
+                                        <Input placeholder="{i18n>wHDeliveryAddressStepPlaceholderHouseNr}"
+                                            enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            fieldGroupIds="deliveryAddress"
+                                            required="false"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Hsnm1',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    maxLength: 10
+                                                }
+                                            }" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Pstlz/@sap:label}/ {/#Plant/Ort01/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Input enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            fieldGroupIds="deliveryAddress"
+                                            required="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            placeholder="{i18n>placeholderActionEnter} {/#Plant/Pstlz/@sap:label}"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Pstlz',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: false,
+                                                    maxLength: 10
+                                                }
+                                            }" />
+                                        <Input enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            fieldGroupIds="deliveryAddress"
+                                            required="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            placeholder="{i18n>placeholderActionEnter} {/#Plant/Ort01/@sap:label}"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Ort01',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: false,
+                                                    maxLength: 25
+                                                }
+                                            }" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Land1/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Input id="inputCountry"
+                                            required="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}}"
+                                            placeholder="{i18n>placeholderActionEnter} {/#Plant/Land1/@sap:label}"
+                                            fieldGroupIds="deliveryAddress"
+                                            showValueHelp="true"
+                                            valueHelpOnly="true"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Land1',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: false,
+                                                    maxLength: 3
+                                                }
+                                            }"
+                                            valueHelpRequest="onValueHelpRequestedCountry" />
+                                        <Text text="{prHeaderModel>/deliveryAddress/Land1T}" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{/#Plant/Region/@sap:label}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <Input id="inputRegion"
+                                            enabled="{= !${headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible} &amp;&amp; ${prHeaderModel>/deliveryAddress/Land1} ? true : false}"
+                                            placeholder="{i18n>placeholderActionEnter} {/#Plant/Region/@sap:label}"
+                                            fieldGroupIds="deliveryAddress"
+                                            showValueHelp="true"
+                                            valueHelpOnly="true"
+                                            value="{
+                                                path: 'prHeaderModel>/deliveryAddress/Region',
+                                                type: 'sap.ui.model.odata.type.String',
+                                                constraints: {
+                                                    nullable: true,
+                                                    maxLength: 3
+                                                }
+                                            }"
+                                            valueHelpRequest="onValueHelpRequestedRegion" />
+                                        <Text text="{prHeaderModel>/deliveryAddress/RegionT}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHDeliveryAddressStepLabelDeliveryOptions}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <RadioButtonGroup id="radioButtonGroupDeliveryOptions"
+                                            select="onRadioButtonGroupDeliveryOptionsSelect">
+                                            <buttons>
+                                                <RadioButton text="{i18n>wHDeliveryAddressStepRadioButtonDefaultAddress}" />
+                                                <RadioButton text="{i18n>wHDeliveryAddressStepRadioButtonChangeAddress}" />
+                                                <RadioButton text="{i18n>wHDeliveryAddressStepRadioButtonLineItem}" />
+                                            </buttons>
+                                        </RadioButtonGroup>
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:Form>
+                    <MessageStrip visible="{headerWizardModel>/messageStripDeliveryAddressOnLineItemVisible}"
+                        text="{i18n>wHDeliveryAddressStepMessageStripAddressOnLineItem}"
+                        type="Warning"
+                        showIcon="true"
+                        showCloseButton="false"
+                        class="sapUiTinyMarginTop">
+                    </MessageStrip>
+                </WizardStep>
+                <WizardStep id="wizardHeaderVendorSelection"
+                    title="{i18n>wHVendorStepTitle}"
+                    validated="true">
+                    <Panel backgroundDesign="Transparent">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="{i18n>wHVendorStepTitleVendorSelection}"
+                                    class="panelTitleNoMarginLeft" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <Text text="{i18n>wHVendorStepIntroVendorSelection}"
+                                class="sapUiTinyMarginTop sapUiSmallMarginBottom" />
+                            <fb:FilterBar id="filterBarVendorList"
+                                reset="onReset"
+                                search="onFilterBarVendorSearch"
+                                header="{i18n>wHVendorStepTitleVendorList}"
+                                showFilterConfiguration="false"
+                                useToolbar="false"
+                                class="filterBarTitleNoMargin">
+                                <fb:filterGroupItems>
+                                    <fb:FilterGroupItem groupName="vendorNumber"
+                                        groupTitle="{i18n>wHVendorStepLabelSearchNumber}"
+                                        name="filterVendorNumber"
+                                        label="{i18n>wHVendorStepLabelSearchNumber}"
+                                        partOfCurrentVariant="true"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <Input id="inputVendorSearchNumber"
+                                                type="Text"
+                                                placeholder="{i18n>wHVendorStepPlaceholderSearchNumber}" />
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+                                    <fb:FilterGroupItem groupName="vendorName"
+                                        groupTitle="{i18n>wHVendorStepLabelSearchNumber}"
+                                        name="filterVendorName"
+                                        label="{i18n>wHVendorStepLabelSearchName}"
+                                        partOfCurrentVariant="true"
+                                        visibleInFilterBar="true">
+                                        <fb:control>
+                                            <Input id="inputVendorSearchName"
+                                                required="true"
+                                                type="Text"
+                                                placeholder="{i18n>wHVendorStepPlaceholderSearchName}" />
+                                        </fb:control>
+                                    </fb:FilterGroupItem>
+                                </fb:filterGroupItems>
+                            </fb:FilterBar>
+                            <List id="listVendorSelectionWizard"
+                                mode="SingleSelectLeft"
+                                noDataText="{i18n>wHVendorStepNoDataTextVendorList}"
+                                growing="true"
+                                growingThreshold="10"
+                                growingTriggerText="{i18n>wHVendorStepShowMoreTextList}"
+                                selectionChange="onSelectionChangeVendorList"
+                                items="{vendorModel>/results/}">
+                                <CustomListItem>
+                                    <Title text="{vendorModel>Name}"
+                                        class="sapUiSmallMarginTopBottom" />
+                                    <ObjectAttribute title="{i18n>wHVendorStepLabelPropertyVendorId}"
+                                        text="{vendorModel>Lifnr}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute title="{i18n>wHVendorStepLabelPropertyVendorEmail}"
+                                        text="{vendorModel>MAdr}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute title="{i18n>wHVendorStepLabelPropertyMinorityIndicator}"
+                                        text="{vendorModel>Mindk}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute title="{i18n>wHVendorStepLabelPropertyVat}"
+                                        text="{vendorModel>Stceg}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute title="{i18n>wHVendorStepLabelPropertyPaymentTerms}"
+                                        text="{vendorModel>ZtermT}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute visible="{headerWizardModel>/searchVendorsInAllCompanyCodes}"
+                                        title="{i18n>wHVendorStepLabelPropertyCompanyCode}"
+                                        text="{vendorModel>Bukrs}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <ObjectAttribute
+                                        title="{i18n>wHVendorStepLabelPropertyPlant}"
+                                        text="{vendorModel>Werks}"
+                                        class="sapUiTinyMarginBottom" />
+                                    <HBox 
+                                        visible="{= ${vendorModel>VendorToCurrency/}.length > 1}"
+                                        alignItems="Center"
+                                        class="sapUiSmallMarginBottom hboxVendorSelection">
+                                        <Label text="{i18n>wHVendorStepLabelPropertyCurrency}:"
+                                            required="true"
+                                            class="sapUiTinyMarginEnd bold" />
+                                        <Select 
+                                            id="selectVendorCurrency"
+                                            enabled="{= ${vendorModel>Lifnr} === ${prHeaderModel>/vendor/Lifnr}}"
+                                            forceSelection="false"
+                                            change="onSelectionChangeVendorCurrency"
+                                            items="{
+                                                path: 'vendorModel>VendorToCurrency/',
+                                                templateShareable:false
+                                            }"
+                                            selectedKey="{prHeaderModel>/selectedVendorCurrency}"
+                                            class="selectVendorCurrency" >
+                                            <core:Item key="{vendorModel>WaeS}"
+                                                text="{vendorModel>WaeS}" />
+                                        </Select>
+                                    </HBox>
+                                    <ObjectAttribute visible="{= ${vendorModel>VendorToCurrency/}.length &lt;= 1}"
+                                        title="{i18n>wHVendorStepLabelPropertyCurrency}"
+                                        text="{vendorModel>VendorToCurrency/0/WaeS}"
+                                        class="sapUiSmallMarginBottom bold" />
+                                    <VBox>
+                                        <ObjectStatus visible="{vendorModel>Sperr}"
+                                            text="{= ${vendorModel>Sperr} === true ? ${i18n>wHVendorStepStatusTextVendorBlocked} : ''}"
+                                            state="Error"
+                                            icon="sap-icon://alert"
+                                            class="sapUiSmallMarginBottom" />
+                                        <ObjectStatus visible="{vendorModel>Loevm}"
+                                            text="{= ${vendorModel>Loevm} === true ? ${i18n>wHVendorStepStatusTextVendorDeleted} : ''}"
+                                            state="Error"
+                                            icon="sap-icon://alert"
+                                            class="sapUiSmallMarginBottom" />
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                            <Panel id="wHVendorStepPanelHelp"
+                                headerText="{i18n>wHVendorStepTitleHelpPanelVendorSelection}"
+                                expandable="true"
+                                expanded="false"
+                                expandAnimation="true"
+                                backgroundDesign="Solid">
+                                <content>
+                                    <l:Grid hSpacing="1rem"
+                                        vSpacing="1rem"
+                                        defaultSpan="XL6 L6 M12 S12"
+                                        defaultIndent="XL0 L0 M0 S0">
+                                        <VBox>
+                                            <items>
+                                                <Title text="{i18n>wHVendorStepTitleOption1}"
+                                                    level="H4" />
+                                                <Text text="{i18n>wHVendorStepTextOption1}"
+                                                    class="sapUiTinyMarginBottom" />
+                                                <Link text="{i18n>wHVendorStepLinkOption1}"
+                                                    href="{settingsModel>/VMD_TEMPLATES}"
+                                                    target="_blank"
+                                                    class="sapUiTinyMarginBottom" />
+                                                <l:Grid hSpacing="0"
+                                                    vSpacing="0">
+                                                    <Label text="{i18n>wHVendorStepLabelOption1CompanyCode}"
+                                                        class="sapUiTinyMarginTop">
+                                                        <layoutData>
+                                                            <l:GridData span="XL5 L5 M5 S12" />
+                                                        </layoutData>
+                                                    </Label>
+                                                    <Select id="selectCompanyCodeVendor"
+                                                        width="100%"
+                                                        enabled="{= !${headerWizardModel>/searchVendorsInAllCompanyCodes}}"
+                                                        selectedKey="{= ${headerWizardModel>/searchVendorsInAllCompanyCodes} === true ? null : ${prHeaderModel>/companyCode/Bukrs}}"
+                                                        forceSelection="false"
+                                                        items="{
+                                                            path: 'companyCodeModel>/',
+                                                            sorter: { path: 'Bukrs' }
+                                                        }">
+                                                        <core:Item key="{companyCodeModel>Bukrs}"
+                                                            text="{companyCodeModel>Bukrs} - {companyCodeModel>Butxt}" />
+                                                        <layoutData>
+                                                            <l:GridData span="XL7 L7 M7 S12" />
+                                                        </layoutData>
+                                                    </Select>
+                                                    <Label text="{i18n>wHVendorStepLabelSearchInAllCompanyCodes}"
+                                                        class="sapUiTinyMarginTop">
+                                                        <layoutData>
+                                                            <l:GridData span="XL5 L5 M5 S12" />
+                                                        </layoutData>
+                                                    </Label>
+                                                    <Switch id="switchSearchVendorsInAllCompanyCodes"
+                                                        state="{headerWizardModel>/searchVendorsInAllCompanyCodes}">
+                                                        <layoutData>
+                                                            <l:GridData span="XL7 L7 M7 S12" />
+                                                        </layoutData>
+                                                    </Switch>
+                                                    <Label text="{i18n>wHVendorStepLabelOption1Blocked}"
+                                                        class="sapUiTinyMarginTop">
+                                                        <layoutData>
+                                                            <l:GridData span="XL5 L5 M5 S12" />
+                                                        </layoutData>
+                                                    </Label>
+                                                    <Switch id="switchDisplayBlockedVendors"
+                                                        state="false">
+                                                        <layoutData>
+                                                            <l:GridData span="XL7 L7 M7 S12" />
+                                                        </layoutData>
+                                                    </Switch>
+                                                    <Label text="{i18n>wHVendorStepLabelOption1Deleted}"
+                                                        class="sapUiTinyMarginTop">
+                                                        <layoutData>
+                                                            <l:GridData span="XL5 L5 M5 S12" />
+                                                        </layoutData>
+                                                    </Label>
+                                                    <Switch id="switchDisplayDeletedVendors"
+                                                        state="false">
+                                                        <layoutData>
+                                                            <l:GridData span="XL7 L7 M7 S12" />
+                                                        </layoutData>
+                                                    </Switch>
+                                                    <Button text="{i18n>wHVendorStepButtonOption1Refresh}"
+                                                        type="Emphasized"
+                                                        icon="sap-icon://search"
+                                                        iconFirst="true"
+                                                        class="sapUiTinyMarginTop"
+                                                        press="onButtonPressReloadVendorList">
+                                                        <layoutData>
+                                                            <l:GridData span="XL12 L12 M12 S12" />
+                                                        </layoutData>
+                                                    </Button>
+                                                </l:Grid>
+                                            </items>
+                                        </VBox>
+                                        <VBox>
+                                            <items>
+                                                <Title text="{i18n>wHVendorStepTitleOption2}"
+                                                    level="H4" />
+                                                <Text text="{i18n>wHVendorStepTextOption2}"
+                                                    class="sapUiTinyMarginBottom" />
+                                                <Link text="{i18n>wHVendorStepLinkOption2}"
+                                                    href="{settingsModel>/PROCUREM_TEMPL}"
+                                                    target="_blank" />
+                                            </items>
+                                        </VBox>
+                                    </l:Grid>
+                                </content>
+                            </Panel>
+                        </content>
+                    </Panel>
+                    <form:Form id="formVendorEmail"
+                        visible="{= ${prHeaderModel>/vendor} ? true : false}">
+                        <form:title>
+                            <core:Title text="{i18n>wHVendorStepTitleVendorEmail}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:formContainers>
+                            <form:FormContainer>
+                                <form:formElements>
+                                    <form:FormElement>
+                                        <form:label>
+                                            <Label text="{i18n>wHVendorStepLabelVendorEmail}"
+                                                class="sapUiTinyMarginTop" />
+                                        </form:label>
+                                        <form:fields>
+                                            <Input id="inputVendorEmail"
+                                                value="{
+                                                    type: 'sap.ui.model.type.String',
+                                                    constraints: {
+                                                        nullable: false
+                                                    }
+                                                }"
+                                                placeholder="{i18n>wHVendorStepPlaceholderVendorEmail}" />
+                                        </form:fields>
+                                    </form:FormElement>
+                                    <form:FormElement>
+                                        <form:label>
+                                            <Label text="{i18n>wHVendorStepLabelUserEmail}"
+                                                class="sapUiTinyMarginTop" />
+                                        </form:label>
+                                        <form:fields>
+                                            <Input id="inputUserEmail"
+                                                value="{
+                                                    type: 'sap.ui.model.type.String',
+                                                    constraints: {
+                                                        nullable: false
+                                                    }
+                                                }"
+                                                placeholder="{i18n>wHVendorStepPlaceholderUserEmail}" />
+                                        </form:fields>
+                                    </form:FormElement>
+                                    <form:FormElement>
+                                        <form:label>
+                                            <Label text="{i18n>wHVendorStepLabelRecipientEmail}"
+                                                class="sapUiTinyMarginTop" />
+                                        </form:label>
+                                        <form:fields>
+                                            <Input id="inputRecipientEmail"
+                                                value="{
+                                                    type: 'sap.ui.model.type.String',
+                                                    constraints: {
+                                                        nullable: false
+                                                    }
+                                                }"
+                                                placeholder="{i18n>wHVendorStepPlaceholderRecipientEmail}" />
+                                        </form:fields>
+                                    </form:FormElement>
+                                </form:formElements>
+                            </form:FormContainer>
+                            <form:FormContainer>
+                                <form:formElements>
+                                    <form:FormElement>
+                                        <form:label>
+                                            <Label text="{i18n>wHVendorStepLabelEmailDestination}"
+                                                class="sapUiTinyMarginTop" />
+                                        </form:label>
+                                        <form:fields>
+                                            <VBox>
+                                                <CheckBox id="checkBoxVendorMailToVendor"
+                                                    text="{i18n>wHVendorStepButtonSendMailToVendor}"
+                                                    wrapping="true"
+                                                    select="onSelectCheckBoxMailToVendor" />
+                                                <CheckBox id="checkBoxVendorMailToRequestor"
+                                                    text="{i18n>wHVendorStepButtonSendMailToRequestor}"
+                                                    wrapping="true"
+                                                    select="onSelectCheckBoxMailToRequestor" />
+                                                <CheckBox id="checkBoxVendorMailToRecipient"
+                                                    text="{i18n>wHVendorStepButtonSendMailToRecipient}"
+                                                    wrapping="true"
+                                                    select="onSelectCheckBoxMailToRecipient" />
+                                            </VBox>
+                                        </form:fields>
+                                    </form:FormElement>
+                                </form:formElements>
+                            </form:FormContainer>
+                        </form:formContainers>
+                    </form:Form>
+                </WizardStep>
+                <WizardStep id="wizardHeaderDeliveryDateDocType"
+                    title="{i18n>wHDeliveryDateDocTypeStepTitle}">
+                    <Panel backgroundDesign="Transparent">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="{i18n>wHDeliveryDateDocTypeStepTitleDeliveryDate}"
+                                    class="panelTitleNoMarginLeft" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <content>
+                            <Text text="{i18n>wHDeliveryDateDocTypeStepTextDeliveryDate}"
+                                class="sapUiTinyMarginTop sapUiSmallMarginBottom" />
+                            <l:Grid hSpacing="1rem"
+                                vSpacing="1rem"
+                                defaultSpan="XL6 L6 M6 S12"
+                                defaultIndent="XL0 L0 M0 S0"
+                                class="deliveryDateSideBySide">
+                                <Panel backgroundDesign="Solid"
+                                    class="panelRoundedBorder">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <RadioButton class="sapUiTinyMarginBegin"
+                                                groupName="radioButtonGroupDeliveryDate"
+                                                selected="{= !${prHeaderModel>/deliveryDates/multipleDeliveries}}"
+                                                select="handleRadioButtonOneTimeDeliveryPress" />
+                                            <Title text="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryTitle}" />
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <content>
+                                        <form:Form editable="true">
+                                            <form:layout>
+                                                <form:ResponsiveGridLayout />
+                                            </form:layout>
+                                            <form:FormContainer>
+                                                <form:formElements>
+                                                    <form:FormElement>
+                                                        <form:label>
+                                                            <Label text="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryLabelDeliveryDate}" />
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <DatePicker id="datePickerWizardDeliverDateOneTimeDeliveryDate"
+                                                                required="{= !${prHeaderModel>/deliveryDates/multipleDeliveries} &amp;&amp; !${prHeaderModel>/deliveryDates/deliveryDateOnLineItems} ? true : false}"
+                                                                change="onChangeDeliveryDate"
+                                                                placeholder="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryPlaceholderDeliveryDate}"
+                                                                enabled="{= !${prHeaderModel>/deliveryDates/multipleDeliveries} &amp;&amp; !${prHeaderModel>/deliveryDates/deliveryDateOnLineItems} ? true : false}"
+                                                                value="{
+                                                                    path: 'prHeaderModel>/deliveryDates/deliveryDate',
+                                                                    type: 'sap.ui.model.odata.type.DateTime',
+                                                                    constraints: {
+                                                                        nullable: false,
+                                                                        UTC: true,				
+                                                                        displayFormat: 'Date'
+                                                                    },
+                                                                    formatOptions: { 
+                                                                        pattern: 'MMM d, yyyy'
+                                                                    }
+                                                                }" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement>
+                                                        <form:fields>
+                                                            <CheckBox id="checkboxWizardDeliverDateOneTimeDeliveryDifferentDates"
+                                                                text="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryLabelCheckBox}"
+                                                                wrapping="true"
+                                                                enabled="{= !${prHeaderModel>/deliveryDates/multipleDeliveries}}"
+                                                                selected="{prHeaderModel>/deliveryDates/deliveryDateOnLineItems}"
+                                                                select="handleCheckboxDifferentDatesSelected" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                </form:formElements>
+                                            </form:FormContainer>
+                                        </form:Form>
+                                        <MessageStrip visible="{prHeaderModel>/deliveryDates/deliveryDateOnLineItems}"
+                                            text="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryTextWarningBoxDateOnLineItemLevel}"
+                                            type="Warning"
+                                            showIcon="true"
+                                            class="sapUiSmallMarginBeginEnd sapUiTinyMarginBottom" />
+                                        <MessageStrip text="{i18n>wHDeliveryDateDocTypeStepOneTimeDeliveryTextInfoBox}"
+                                            type="Information"
+                                            showIcon="true"
+                                            class="sapUiSmallMarginBeginEnd" />
+                                    </content>
+                                </Panel>
+                                <Panel backgroundDesign="Solid"
+                                    class="panelRoundedBorder">
+                                    <headerToolbar>
+                                        <OverflowToolbar>
+                                            <RadioButton class="sapUiTinyMarginBegin"
+                                                groupName="radioButtonGroupDeliveryDate"
+                                                selected="{prHeaderModel>/deliveryDates/multipleDeliveries}"
+                                                select="handleRadioButtonMultipleDeliveriesPress" />
+                                            <Title text="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesTitle}" />
+                                        </OverflowToolbar>
+                                    </headerToolbar>
+                                    <content>
+                                        <form:Form editable="true">
+                                            <form:layout>
+                                                <form:ResponsiveGridLayout />
+                                            </form:layout>
+                                            <form:FormContainer>
+                                                <form:formElements>
+                                                    <form:FormElement>
+                                                        <form:label>
+                                                            <Label text="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesLabelFromDate}" />
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <DatePicker id="datePickerWizardDeliverDateMultipleDeliveriesFromDate"
+                                                                required="{prHeaderModel>/deliveryDates/multipleDeliveries}"
+                                                                change="onChangeDeliveryDate"
+                                                                placeholder="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesPlaceholderFromDate}"
+                                                                enabled="{prHeaderModel>/deliveryDates/multipleDeliveries}"
+                                                                value="{
+                                                                    path: 'prHeaderModel>/deliveryDates/validityStart',
+                                                                    type: 'sap.ui.model.odata.type.DateTime',
+                                                                    constraints: {
+                                                                        nullable: false,
+                                                                        UTC: true,				
+                                                                        displayFormat: 'Date'
+                                                                    },
+                                                                    formatOptions: { 
+                                                                        pattern: 'MMM d, yyyy'
+                                                                    }
+                                                                }" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement>
+                                                        <form:label>
+                                                            <Label text="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesLabelToDate}" />
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <DatePicker id="datePickerWizardDeliverDateMultipleDeliveriesToDate"
+                                                                required="{prHeaderModel>/deliveryDates/multipleDeliveries}"
+                                                                change="onChangeDeliveryDate"
+                                                                placeholder="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesPlaceholderToDate}"
+                                                                enabled="{prHeaderModel>/deliveryDates/multipleDeliveries}"
+                                                                value="{
+                                                                    path: 'prHeaderModel>/deliveryDates/validityEnd',
+                                                                    type: 'sap.ui.model.odata.type.DateTime',
+                                                                    constraints: {
+                                                                        nullable: false,
+                                                                        UTC: true,				
+                                                                        displayFormat: 'Date'
+                                                                    },
+                                                                    formatOptions: { 
+                                                                        pattern: 'MMM d, yyyy'
+                                                                    }
+                                                                }" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                </form:formElements>
+                                            </form:FormContainer>
+                                        </form:Form>
+                                        <MessageStrip text="{i18n>wHDeliveryDateDocTypeStepMultipleDeliveriesTextInfoBox}"
+                                            type="Information"
+                                            showIcon="true"
+                                            class="sapUiSmallMarginBeginEnd" />
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </content>
+                    </Panel>
+                    <form:Form visible="{prHeaderModel>/deliveryDates/multipleDeliveries}">
+                        <form:title>
+                            <core:Title text="{i18n>wHDeliveryDateDocTypeStepTitleDocType}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:fields>
+                                        <VBox>
+                                            <CheckBox id="checkBoxDocumentTypeFramework"
+                                                text="{i18n>wHDeliveryDateDocTypeStepButtonFramework}"
+                                                wrapping="true"
+                                                select="onSelectCheckBoxFramework" />
+                                            <CheckBox id="checkBoxDocumentTypeBlanket"
+                                                text="{i18n>wHDeliveryDateDocTypeStepButtonBlanket}"
+                                                wrapping="true"
+                                                select="onSelectCheckBoxBlanket" />
+                                            <CheckBox id="checkBoxDocumentTypeStandard"
+                                                text="{i18n>wHDeliveryDateDocTypeStepButtonStandard}"
+                                                wrapping="true"
+                                                select="onSelectCheckBoxStandard" />
+                                        </VBox>
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:Form>
+                </WizardStep>
+                <WizardStep id="wizardHeaderNotes"
+                    title="{i18n>wHNotesStepTitle}">
+                    <form:Form>
+                        <form:title>
+                            <core:Title text="{i18n>wHNotesStepTitleMessageForProcurement}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHNotesStepTitleMessageForProcurement}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <TextArea id="textAreaWHNotesForProcurement"
+                                            required="true"
+                                            rows="10"
+                                            valueLiveUpdate="true"
+                                            placeholder="{i18n>wHNotesStepTextAreaMessageForProcurementPlaceholder}"
+                                            value="{ path: 'prHeaderModel>/notes/messageForProcurement', type: 'sap.ui.model.odata.type.String', constraints: {maxLength : 255, nullable : false} }" />
+                                        <FormattedText htmlText="{i18n>wHNotesStepTextAreaHelpMessageForProcurementPlaceholder}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:Form>
+                    <form:Form>
+                        <form:title>
+                            <core:Title text="{i18n>wHNotesStepTitleMessageForApporvers}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHNotesStepTitleMessageForApporvers}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <TextArea id="textAreaWHNotesForApprover"
+                                            required="true"
+                                            rows="10"
+                                            valueLiveUpdate="true"
+                                            placeholder="{i18n>wHNotesStepTextAreaMessageForApporversPlaceholder}"
+                                            value="{ path: 'prHeaderModel>/notes/messageForApprover', type: 'sap.ui.model.odata.type.String', constraints: {maxLength : 255, nullable : false} }" />
+                                        <FormattedText htmlText="{i18n>wHNotesStepTextAreaHelpMessageForApporversPlaceholder}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:Form>
+                    <form:Form>
+                        <form:title>
+                            <core:Title text="{i18n>wHNotesStepTitleMessageForVendor}" />
+                        </form:title>
+                        <form:layout>
+                            <form:ResponsiveGridLayout />
+                        </form:layout>
+                        <form:FormContainer>
+                            <form:formElements>
+                                <form:FormElement>
+                                    <form:label>
+                                        <Label text="{i18n>wHNotesStepTitleMessageForVendor}" />
+                                    </form:label>
+                                    <form:fields>
+                                        <TextArea id="textAreaWHNotesForVendor"
+                                            rows="10"
+                                            valueLiveUpdate="true"
+                                            placeholder="{i18n>wHNotesStepTextAreaMessageForVendorPlaceholder}"
+                                            value="{ path: 'prHeaderModel>/notes/messageForVendor', type: 'sap.ui.model.odata.type.String', constraints: {maxLength : 255, nullable : true} }" />
+                                        <FormattedText htmlText="{i18n>wHNotesStepTextAreaHelpMessageForVendorPlaceholder}" />
+                                    </form:fields>
+                                </form:FormElement>
+                            </form:formElements>
+                        </form:FormContainer>
+                    </form:Form>
+                </WizardStep>
+            </Wizard>
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <Button id="buttonMessagePopover"
+                    visible="{=!!${message>/}.length}"
+                    icon="{ path: '/', formatter: '.buttonIconFormatter' }"
+                    type="{ path: '/', formatter: '.buttonTypeFormatter' }"
+                    text= "{path: '/', formatter: '.highestSeverityMessages' }"
+                    press=".handleMessagePopoverPress"
+                    ariaHasPopup="Dialog" />
+                <ToolbarSpacer />
+                <Button id="buttonHeaderWizardCancelEdit"
+                    text="{i18n>HeaderWizard.ButtonCancelEdit}"
+                    visible="{= ${headerWizardModel>/mode} === 'edit' }"
+                    press="onPressButtonCancelEdit" />
+                <Button id="buttonHeaderWizardPreviousStep"
+                    text="{i18n>wHPreviousButton}"
+                    visible="{headerWizardModel>/backButtonVisible}"
+                    press="onPressHeaderWizardBackButton" />
+                <Button id="buttonHeaderWizardNextStep"
+                    text="{i18n>wHNextButton}"
+                    type="Emphasized"
+                    visible="{headerWizardModel>/nextButtonVisible}"
+                    press="onPressHeaderWizardNextButton" />
+                <Button id="buttonHeaderWizardFinish"
+                    text="{= ${headerWizardModel>/mode} === 'edit' ? ${i18n>HeaderWizard.ButtonSaveEdit} : ${i18n>wHFinishButton} }"
+                    type="Emphasized"
+                    visible="{headerWizardModel>/finishButtonVisible}"
+                    press="onPressHeaderWizardFinishButton" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

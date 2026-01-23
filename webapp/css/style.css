@@ -1,0 +1,7 @@
+/* Enter your custom styles here */
+
+.customVBoxBorder{
+    border: 1px;
+    border-style:solid;
+    border-color: #808080;
+}

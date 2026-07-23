@@ -65,6 +65,12 @@
         "settings": {
           "bundleName": "com.triumph.putawaybymarriage.i18n.i18n"
         }
+      },
+      "appModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "defaultBindingMode": "TwoWay"
+        }
       }
     },
     "resources": {

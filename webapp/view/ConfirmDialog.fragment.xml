@@ -1,0 +1,64 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <Dialog id="confirmDialog" draggable="true" resizable="true" title="Confirm Items" contentWidth="80%" contentHeight="60%" stretchOnPhone="true">
+
+        <VBox width="100%" renderType="Bare">
+            <Table id="idConfirmTable" inset="false" items="{confirmModel>/items}" autoPopinMode="true" sticky="ColumnHeaders">
+
+                <columns>
+                    <Column>
+                        <Text text="Mat. /Batch No"/>
+                    </Column>
+                    <Column>
+                        <Text text="Source Storage Bin"/>
+                    </Column>
+                    <Column>
+                        <Text text="Dest. Str. Bin"/>
+                    </Column>
+                    <Column>
+                        <Text text="Confirm Bin"/>
+                    </Column>
+                    <Column>
+                        <Text text="Quantity"/>
+                    </Column>
+
+                    <Column importance="High">
+                        <Text text="Counted Quantity"/>
+                    </Column>
+                    <Column>
+                        <Text text="UOM"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{confirmModel>batch}" />
+                            <Text text="{confirmModel>sourceBin}" />
+                            <ObjectIdentifier title="{confirmModel>destinationBin}" />
+                            <ObjectIdentifier title="{confirmModel>destinationBinConfirm}" />
+                            <Text text="{confirmModel>LGTYP}" />
+                            <Text text="{confirmModel>LGPLA}" />
+                            <!-- <ObjectIdentifier title="{= String(${confirmModel>MENGE}) }" /> -->
+                            <Text text="{confirmModel>ALTME}" />
+                        </cells>
+                    </ColumnListItem>
+
+                </items>
+
+            </Table>
+        </VBox>
+
+        <beginButton>
+            <Button text="OK" type="Accept" press=".onConfirmOk" />
+        </beginButton>
+
+        <endButton>
+            <Button text="Cancel" press=".onConfirmCancel" />
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

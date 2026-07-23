@@ -13,27 +13,42 @@
             <Button id="buttonWelcomeLogoutMain" icon="sap-icon://log" press=".onPressButtonLogout" />
         </headerContent>
         <!-- <headerContent>
-            <Button text="Copy Source Bin" press="onCopySourceBin" enabled="{= !!${appModel>/rows/0/bin} }"/>
+            <Button text="Copy Source Bin" press="onCopySourceBin" enabled="{= !!${appModel>/rows/0/sourceStorageBin} }"/>
             <Button text="Next" press=".onWizardPage"/>
         </headerContent> -->
         <content>
-            <HBox class="sapUiTinyMargin sapUiSmallMarginBegin">
-                <Button text="Clear" icon="sap-icon://reset" tooltip="Clear Scanned Batch/Bin" type="Emphasized" class="sapUiTinyMarginEnd"/>
-                <Button text="Copy Source Bin" icon="sap-icon://copy" tooltip="Copy First Source Bin to All Scanned Batches" press="onCopySourceBin" enabled="{= !!${appModel>/rows/0/bin} }"/>
-            </HBox>
+            <!-- <HBox class="sapUiTinyMargin sapUiSmallMarginBegin"> -->
+            <Button text="TestRead" press=".readTest"/>
+            <l:Grid defaultSpan="XL6 L6 M6 S12">
+                <OverflowToolbar design="Transparent">
+                    <Button text="Clear" icon="sap-icon://reset" tooltip="Clear Scanned Batch/Bin" press=".onClear" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                    <Button text="Copy Source Bin" icon="sap-icon://copy" tooltip="Copy First Source Bin to All Scanned Batches" press=".onCopySourceBin" enabled="{= !!${appModel>/rows/0/sourceStorageBin} }" class="sapUiTinyMarginEnd"/>
+                    <ToolbarSpacer ></ToolbarSpacer>
+                    <HBox alignItems="Center">
+                        <Text text="Multi-Putaway" class="sapUiTinyMarginEnd"></Text>
+                        <Switch state="{appModel>/state}" change=".onScanningModeChange" customTextOn="On" customTextOff="Off">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Switch>
+                    </HBox>
+
+                </OverflowToolbar>
+            </l:Grid>
+            <!-- </HBox> -->
             <l:Grid defaultSpan="XL6 L6 M6 S12">
                 <!-- <VBox alignItems="Start"> -->
                 <!-- <Panel class="customVBoxBorder"> -->
-                <Table id="scanTable" class="customVBoxBorder" headerText="Material / Source Bin Scan" items="{appModel>/rows}" mode="None" fixedLayout="true">
+                <Table id="scanTable" class="customVBoxBorder" headerText="Material / Source Bin Scan" items="{appModel>/rows}" mode="None" >
 
                     <columns>
                         <!-- Batch -->
-                        <Column width="12rem" minScreenWidth="Tablet" demandPopin="true">
+                        <Column width="12rem" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                             <Text text="Mat. /Batch No"/>
                         </Column>
 
                         <!-- Bin -->
-                        <Column width="8rem" minScreenWidth="Tablet" demandPopin="true">
+                        <Column width="8rem" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
                             <Text text="Source Storage Bin"/>
                         </Column>
 
@@ -55,14 +70,14 @@
                                 </Input>
 
                                 <!-- Bin -->
-                                <Input value="{appModel>bin}" submit="onScanSubmit" enabled="{= !!${appModel>batch} }" valueState="{appModel>binState}" valueStateText="{appModel>binStateText}">
+                                <Input value="{appModel>sourceStorageBin}" submit="onScanSubmit" enabled="{= !!${appModel>batch} }" valueState="{appModel>binState}" valueStateText="{appModel>binStateText}">
                                     <customData>
                                         <core:CustomData key="col" value="BIN"/>
                                     </customData>
                                 </Input>
 
                                 <!-- Storage Type -->
-                                <Input value="{appModel>bin}" enabled="false"/>
+                                <Input value="{appModel>sourceStorageType}" enabled="false"/>
                             </cells>
                         </ColumnListItem>
                     </items>
@@ -70,11 +85,24 @@
                 <!-- </Panel> -->
                 <!-- </VBox> -->
             </l:Grid>
+            <DatePicker required="true" placeholder="{i18n>Detail.PlaceholderEnterPostingDate}" value="{
+															path: 'dateModel>/postingDate',
+															type: 'sap.ui.model.odata.type.DateTime',
+															constraints: {
+																nullable: false,
+																UTC: true,				
+																displayFormat: 'Date'
+															},
+															formatOptions: { 
+																pattern: 'MMM d, yyyy'
+															}
+														}" minDate="{dateModel>/minDate}" maxDate="{dateModel>/maxDate}"/>
         </content>
         <footer>
             <OverflowToolbar>
+            <Button text="press" press="_testLogData"></Button>
                 <ToolbarSpacer/>
-                <Button id="sameDestinationBincontinueButton" enabled="{appModel>/canContinue}" text="SameDBin" press="onContinue" tooltip="Press SameDBin to Move all Scanned Batch/Material to  Same Destination Bin"/>
+                <Button id="sameDestinationBincontinueButton" enabled="{appModel>/canContinue}" text="SameDBin" press=".onSameDBin" tooltip="Press SameDBin to Move all Scanned Batch/Material to  Same Destination Bin"/>
                 <Button id="continueButton" enabled="{appModel>/canContinue}" text="Continue" type="Emphasized" press=".onContinue" tooltip="Press Continue to Move all Scanned Batch/Material to Diff. Destination Bin"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>

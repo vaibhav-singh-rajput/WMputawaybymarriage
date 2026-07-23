@@ -79,40 +79,46 @@
             </l:Grid> -->
 
             <HBox class="sapUiTinyMargin sapUiSmallMarginBegin">
-                <Button text="Clear" icon="sap-icon://reset" type="Emphasized" class="sapUiTinyMarginEnd"/>
-                <!-- <Button text="Back" icon="sap-icon://media-reverse" class="sapUiTinyMarginEnd" press=".onBack"/> -->
-                <Button text="Next" icon="sap-icon://media-play" press=".onBack"/>
+                <Button text="Clear" icon="sap-icon://reset" type="Emphasized" class="sapUiTinyMarginEnd" press=".onClear"/>
+                <Button text="Back" icon="sap-icon://media-reverse" class="sapUiTinyMarginEnd" press=".onBack"/>
+                <Button text="Next" visible="{= ${scannerModel>/currentIndex} + 1 !== ${scannerModel>/totalCount} }" icon="sap-icon://media-play" press=".onConfirm"/>
+                <Button text="Confirm" visible="{= ${scannerModel>/currentIndex} + 1 === ${scannerModel>/totalCount} }" icon="sap-icon://complete" press=".onConfirm"/>
             </HBox>
 
             <l:Grid defaultSpan="XL6 L6 M6 S12">
                 <!-- Destination Information -->
-                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" emptySpanXL="6" emptySpanL="6" emptySpanM="2" emptySpanS="0" class="sapUiTinyMarginBottom customVBoxBorder">
+                <form:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="4" labelSpanS="12" emptySpanXL="6" emptySpanL="6" emptySpanM="1" emptySpanS="0" class="sapUiTinyMarginBottom customVBoxBorder">
 
                     <Title text="Destination info." level="H4"/>
 
                     <Label text="Dest. Str. Bin"/>
-                    <Input editable="false"/>
+                    <Input editable="false" value="{scannerModel>destinationBin}"/>
 
                     <Label text="Count"/>
                     <HBox>
-                        <Input editable="false" value="01" width="4rem"/>
+                        <Input editable="false" value="{= ${scannerModel>/currentIndex} + 1 }" width="4rem"/>
                         <Text text="/" class="sapUiTinyMargin"/>
-                        <Input editable="false" value="01" width="4rem"/>
+                        <Input editable="false" value="{scannerModel>/totalCount}" width="4rem"/>
                     </HBox>
 
                     <Label text="Confirm Bin" />
-                    <Input ></Input>
+                    <HBox alignItems="Center">
+                        <Input id="inputDestinationBinConfirm" submit=".onConfirm" placeholder="Confirm Destination Bin" value="{scannerModel>destinationBinConfirm}" class="sapUiTinyMarginEnd"></Input>
+                        <Label text="Empty Bin In. : " class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
+                        <CheckBox selected="{EmpBinIn1}" enabled="false"/>
+                    </HBox>
 
-                    <Label text="Empty Bin In." />
-                    <CheckBox selected="{EmpBinIn1}" enabled="false"/>
 
                     <Label text="Change Bin" />
-                    <Input ></Input>
+                    <HBox alignItems="Center">
+                        <Input ></Input>
+                        <Label text="Empty Bin In. : " class="sapUiTinyMarginEnd sapUiTinyMarginBegin"/>
+                        <CheckBox selected="{EmpBinIn2}" enabled="false"/>
+                    </HBox>
 
 
 
-                    <Label text="Empty Bin In." />
-                    <CheckBox selected="{EmpBinIn2}" enabled="false"/>
+
 
                 </form:SimpleForm>
             </l:Grid >
